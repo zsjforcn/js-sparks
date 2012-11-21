@@ -1,0 +1,339 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sparks</title>
+<link rel="stylesheet" href="bs/css/bootstrap.min.css">
+<style type="text/css">
+    body {
+        background: #cccccc url(img/bg.png) repeat scroll left top;
+    }
+</style>
+<link rel="stylesheet" href="css/image-player.css">
+</head>
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <a class="brand" href="#">Sparks</a>
+        <ul class="nav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="slide-help.html">slide-help</a></li>
+            <li class="active"><a href="image-player.html">image-player</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row">
+        <div class="span12">
+
+            <div class="mod iplayer">
+                <div class="hd"></div>
+                <div class="bd iplayer-bd">
+                    <ul class="iplayer-imgs">
+                        <li><img src="img/image-player/1.jpg" alt=""></li>
+                        <li><img src="img/image-player/2.jpg" alt=""></li>
+                        <li><img src="img/image-player/3.jpg" alt=""></li>
+                        <li><img src="img/image-player/4.jpg" alt=""></li>
+                    </ul>
+                </div>
+                <div class="ft"></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="bs/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+$('document').ready(function () {
+    $.fn.extend({
+        arrShuffle:function () {
+            function shuffle(v) {
+                for (var j, x, i = v.length; i; j = parseInt(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
+                return v;
+            }
+
+            var arr = [];
+            $(this).each(function () {
+                arr.push(this);
+            });
+            arr = shuffle(arr);
+            return $(arr);
+        }
+    });
+    $.fn.extend({
+        imgPlayRandom:(function () {
+            var index = 0;
+            return function (pre, how) {
+                if(arguments.length < 2) {
+                    ef = ['in', 'out'][Math.floor(Math.random() * 2)];
+                }
+                else {
+                    ef = (how === 'in') ? 'in' : 'out';
+                }
+                if ($.isEmptyObject(pre)) {
+                    throw new Error('Usage: imgPlayRandom(pre, how=out/in)');
+                }
+
+                var thisObj = $(this).eq(0),
+                        preObj = $(pre),
+                        p = thisObj.parents('.iplayer-bd'),
+                        con = p.has('.iplayer-container'),
+                        thisImgSrc = $('img', thisObj).attr('src'),
+                        preImgSrc = $('img', preObj).attr('src'),
+                        effects = { in:[], out:[] };
+                if (con.length == 0) {
+                    p.append('<div class="iplayer-container"></div>');
+                }
+
+                effects.out.push(function () {
+                    var count = 16, inner = '', strTmp = '<div style=""><img src=""></div>';
+                    for (var i = 0; i < count; i++) {
+                        inner += strTmp;
+                    }
+                    var con = $('.iplayer-bd .iplayer-container');
+                    con.html(inner);
+                    var l = 0,
+                            h = con.height(),
+                            w = Math.ceil(con.width() / count);
+                    $('div', con).each(function () {
+                        $(this).css({
+                            display:'none',
+                            height:h + 'px',
+                            width:w + 'px',
+                            left:l + 'px'
+                        });
+                        l += w;
+                    });
+                    l = 0;
+                    $('img', con).each(function () {
+                        $(this).attr('src', preImgSrc);
+                        $(this).css({ left:l + 'px' });
+                        l -= w;
+                    });
+                    thisObj.show();
+                    $('div:even', con).css({top:0 + 'px'}).show().animate({top:-h + 'px'}, 'slow');
+                    $('div:odd', con).css({top:0 + 'px'}).show().animate({top:h + 'px'}, 'slow');
+                });
+                effects.out.push(function () {
+                    var count = 16, inner = '', strTmp = '<div style=""><img src=""></div>';
+                    for (var i = 0; i < count; i++) {
+                        inner += strTmp;
+                    }
+                    var con = $('.iplayer-bd .iplayer-container');
+                    con.html(inner);
+                    var l = 0,
+                            h = con.height(),
+                            dw = Math.ceil(con.width() / ((count + 1) * count / 2)),
+                            w = dw;
+                    $('div', con).each(function () {
+                        $(this).css({
+                            display:'none',
+                            height:h + 'px',
+                            width:w + 'px',
+                            left:l + 'px'
+                        });
+                        l += w;
+                        w += dw;
+                    });
+                    l = 0;
+                    w = dw;
+                    $('img', con).each(function () {
+                        $(this).attr('src', preImgSrc);
+                        $(this).css({left:l + 'px'});
+                        l -= w;
+                        w += dw;
+                    });
+                    thisObj.show();
+                    $('div', con).show().animate({width:0 + 'px'}, 'slow');
+                });
+                effects.out.push(function () {
+                    var row = 3, col = 12, inner = '', strTmp = '<div style=""><img src=""></div>';
+                    for (var i = 0; i < row * col; i++) {
+                        inner += strTmp;
+                    }
+                    var con = $('.iplayer-bd .iplayer-container');
+                    con.html(inner);
+                    var l = 0,
+                            t = 0,
+                            h = con.height() / row,
+                            w = Math.ceil(con.width() / col);
+                    var divs = $('div', con),
+                            imgs = $('img', con);
+                    divs.css({
+                        display:'none',
+                        height:h + 'px',
+                        width:w + 'px'
+                    });
+                    imgs.attr('src', preImgSrc);
+
+                    t = 0;
+                    for (var i = 0; i < row; i++) {
+                        l = 0;
+                        for (var j = 0; j < col; j++) {
+                            divs.eq(i * col + j).css({
+                                left:l + 'px',
+                                top:t + 'px'
+                            });
+                            imgs.eq(i * col + j).css({
+                                left:-l + 'px',
+                                top:-t + 'px'
+                            });
+                            l += w;
+                        }
+                        t += h;
+                    }
+                    thisObj.show();
+                    var dt = 0;
+                    divs.arrShuffle().show().each(function () {
+                        var el = $(this);
+                        setTimeout(function () {
+                            el.animate({top:-h + 'px'}, 'slow');
+                        }, dt);
+                        dt += 25;
+                    });
+                });
+
+                effects.in.push(function () {
+                    var count = 16, inner = '', strTmp = '<div style=""><img src=""></div>';
+                    for (var i = 0; i < count; i++) {
+                        inner += strTmp;
+                    }
+                    var con = $('.iplayer-bd .iplayer-container');
+                    con.html(inner);
+                    var l = 0,
+                            h = con.height(),
+                            w = Math.ceil(con.width() / count);
+                    $('div', con).each(function () {
+                        $(this).css({
+                            display:'none',
+                            height:h + 'px',
+                            width:w + 'px',
+                            left:l + 'px'
+                        });
+                        l += w;
+                    });
+                    l = 0;
+                    $('img', con).each(function () {
+                        $(this).attr('src', thisImgSrc);
+                        $(this).css({ left:l + 'px' });
+                        l -= w;
+                    });
+                    preObj.show();
+                    $('div:even', con).css({top:-h + 'px'}).show().animate({top:0 + 'px'}, 'slow');
+                    $('div:odd', con).css({top:h + 'px'}).show().animate({top:0 + 'px'}, 'slow');
+                });
+                effects.in.push(function () {
+                    var count = 16, inner = '', strTmp = '<div style=""><img src=""></div>';
+                    for (var i = 0; i < count; i++) {
+                        inner += strTmp;
+                    }
+                    var con = $('.iplayer-bd .iplayer-container');
+                    con.html(inner);
+                    var l = 0,
+                            h = con.height(),
+                            dw = Math.ceil(con.width() / ((count + 1) * count / 2)),
+                            w = dw;
+                    $('div', con).each(function () {
+                        $(this).css({
+                            display:'none',
+                            height:h + 'px',
+                            width:w + 'px',
+                            left:l + 'px'
+                        });
+                        l += w;
+                        w += dw;
+                    });
+                    l = 0;
+                    w = dw;
+                    $('img', con).each(function () {
+                        $(this).attr('src', thisImgSrc);
+                        $(this).css({ left:l + 'px' });
+                        l -= w;
+                        w += dw;
+                    });
+                    preObj.show();
+
+                    w = dw;
+                    $('div', con).css({width:0 + 'px'}).each(function () {
+                        $(this).show().animate({width:w + 'px'}, 'slow');
+                        w += dw;
+                    });
+                });
+                effects.in.push(function () {
+                    var row = 3, col = 12, inner = '', strTmp = '<div style=""><img src=""></div>';
+                    for (var i = 0; i < row * col; i++) {
+                        inner += strTmp;
+                    }
+                    var con = $('.iplayer-bd .iplayer-container');
+                    con.html(inner);
+                    var l = 0,
+                            t = 0,
+                            h = con.height() / row,
+                            w = Math.ceil(con.width() / col);
+                    var divs = $('div', con),
+                            imgs = $('img', con);
+                    divs.css({
+                        display:'none',
+                        height:h + 'px',
+                        width:w + 'px'
+                    });
+                    imgs.attr('src', thisImgSrc);
+                    t = 0;
+                    for (var i = 0; i < row; i++) {
+                        l = 0;
+                        for (var j = 0; j < col; j++) {
+                            divs.eq(i * col + j).css({
+                                left:l + 'px',
+                                top:t + 'px'
+                            });
+                            imgs.eq(i * col + j).css({
+                                left:-l + 'px',
+                                top:-t + 'px'
+                            });
+                            l += w;
+                        }
+                        t += h;
+                    }
+                    preObj.show();
+                    var dt = 0;
+                    divs.arrShuffle().each(function () {
+                        var el = $(this);
+                        setTimeout(function () {
+                            var tmp = el.css('top');
+                            el.css({top:-h + 'px'}).show().animate({top:tmp}, 'slow');
+                        }, dt);
+                        dt += 25;
+                    });
+                });
+                effects[ef][(index++) % effects[ef].length]();
+            };
+        })()
+    });
+
+    var num = 0;
+    var jEl = $('.iplayer-imgs li');
+    var len = jEl.length;
+
+    (function () {
+        jEl.hide();
+        jEl.eq((num + 1) % len).imgPlayRandom(jEl.eq(num % len));
+        num++;
+        var foo = arguments.callee;
+        var tt = setTimeout(function () {
+            tt && clearTimeout(tt);
+            foo();
+        }, 3000);
+    })();
+});
+</script>
+
+</body>
+</html>

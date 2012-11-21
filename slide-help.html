@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sparks</title>
+<link rel="stylesheet" href="bs/css/bootstrap.min.css">
+<style type="text/css">
+    body {background: #cccccc url(img/bg.png) repeat scroll left top; }
+</style>
+<link rel="stylesheet" href="css/slide-help.css">
+</head>
+<body>
+
+<div class="navbar">
+    <div class="navbar-inner">
+        <a class="brand" href="#">Sparks</a>
+        <ul class="nav">
+            <li><a href="index.html">Home</a></li>
+            <li class="active"><a href="slide-help.html">slide-help</a></li>
+            <li><a href="image-player.html">image-player</a></li>
+        </ul>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row">
+        <div class="span12">
+
+            <div class="mod shp">
+                <div class="hd shp-hd">
+                    <h2>全程<span class="orange">无需键盘操作</span>，轻松定制旅行计划</h2>
+                </div>
+                <div class="bd shp-bd">
+                    <ul class="shp-item">
+                        <li>只需拖拽，景点、酒店轻松加入行程</li>
+                        <li><span class="orange">地图模式</span> + <span class="orange">智能排序</span>，制定计划更合理</li>
+                        <li><span class="orange">自动建议时长</span> + 交通信息优化 + <span class="orange">行程松紧度</span>，轻松便捷</li>
+                        <li>在线邀请同程驴友，协同商讨，<span class="orange">一键分享你的旅行</span></li>
+                    </ul>
+                    <ul class="shp-img">
+                        <li><img src="img/slide-help/icon-help-1.gif" alt=""></li>
+                        <li><img src="img/slide-help/icon-help-2.gif" alt=""></li>
+                        <li><img src="img/slide-help/icon-help-3.gif" alt=""></li>
+                        <li><img src="img/slide-help/icon-help-4.gif" alt=""></li>
+                    </ul>
+                </div>
+                <div class="ft"></div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="bs/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    $('document').ready(function () {
+        var num = 0;
+        var jEl = $('.shp-img li');
+        var len = jEl.length;
+        (function () {
+            jEl.hide().css({
+                right:'200px',
+                opacity:0.1
+            });
+            jEl.eq(num++ % len).show().animate({
+                right:'0px',
+                opacity:1
+            }, 'slow');
+            var foo = arguments.callee;
+            var tt = setTimeout(function () {
+                tt && clearTimeout(tt);
+                foo();
+            }, 2000);
+        })();
+    });
+</script>
+</body>
+</html>
