@@ -3,29 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <title>Sparks</title>
-<link rel="stylesheet" href="bs/css/bootstrap.min.css">
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 <style type="text/css">
-    body {background: #cccccc url(img/bg.png) repeat scroll left top; }
+    body {background: #cccccc url(assets/img/bg.png) repeat scroll left top; }
 </style>
-<link rel="stylesheet" href="css/slide-help.css">
+<link rel="stylesheet" href="assets/css/slide-help.css">
 </head>
 <body>
 
 <div class="navbar">
     <div class="navbar-inner">
-        <a class="brand" href="#">Sparks</a>
+        <a class="brand" href="index.html">Sparks</a>
         <ul class="nav">
             <li><a href="index.html">Home</a></li>
-            <li class="active"><a href="slide-help.html">slide-help</a></li>
-            <li><a href="image-player.html">image-player</a></li>
         </ul>
     </div>
 </div>
 
-<div class="container">
+<div class="container-fluid">
 
-    <div class="row">
-        <div class="span12">
+    <div class="row-fluid">
+
+        <div class="span2">
+            <ul class="nav nav-list">
+                <li class="nav-header">列表</li>
+                <li class="active"><a href="#">图文帮助提示</a></li>
+                <li><a href="image-player.html">图片播放器</a></li>
+            </ul>
+        </div>
+
+        <div class="span10">
 
             <div class="mod shp">
                 <div class="hd shp-hd">
@@ -39,10 +46,10 @@
                         <li>在线邀请同程驴友，协同商讨，<span class="orange">一键分享你的旅行</span></li>
                     </ul>
                     <ul class="shp-img">
-                        <li><img src="img/slide-help/icon-help-1.gif" alt=""></li>
-                        <li><img src="img/slide-help/icon-help-2.gif" alt=""></li>
-                        <li><img src="img/slide-help/icon-help-3.gif" alt=""></li>
-                        <li><img src="img/slide-help/icon-help-4.gif" alt=""></li>
+                        <li><img src="assets/img/slide-help/icon-help-1.gif" alt=""></li>
+                        <li><img src="assets/img/slide-help/icon-help-2.gif" alt=""></li>
+                        <li><img src="assets/img/slide-help/icon-help-3.gif" alt=""></li>
+                        <li><img src="assets/img/slide-help/icon-help-4.gif" alt=""></li>
                     </ul>
                 </div>
                 <div class="ft"></div>
@@ -53,7 +60,7 @@
 
 </div>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript" src="bs/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
     $('document').ready(function () {

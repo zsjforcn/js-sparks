@@ -1,7 +1,7 @@
 ul, ol {list-style: none; }
 .iplayer-bd { position: relative; }
 .iplayer-bd img { max-width: none; }
-.iplayer-imgs, .iplayer-container { width: 940px; height: 600px; }
+.iplayer-imgs, .iplayer-container { width: 640px; height: 400px; }
 .iplayer-imgs li { display: none; position: absolute; top: 0px; left: 0px; }
 .iplayer-container { position: absolute; top: 0px; left: 0px; overflow: hidden;}
 .iplayer-container div { position: absolute; overflow: hidden; }
